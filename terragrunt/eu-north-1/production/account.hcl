@@ -1,20 +1,20 @@
-include "region" {
-  path = find_in_parent_folders("region.hcl")
-  expose = true
+locals {
+  account_id = "432998432364"
 }
 
 # https://docs.terragrunt.com/features/units/state-backend/
-remote_state {
-  backend = "s3"
-  generate = {
-    path      = "backend.tf"
-    if_exists = "overwrite"
-  }
-  config = {
-    bucket         = "my-terraform-state"
-    key            = "${path_relative_to_include()}/terraform.tfstate"
-    region         = include.region.locals.region
+generate "backend" {
+  path      = "backend.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<EOF
+terraform {
+  backend "s3" {
+    bucket         = "terraform-state-s3-bucket-very-original"
+    key            = "${path_relative_to_include()}/tofu.tfstate"
+    region         = "eu-north-1"
     encrypt        = true
-    dynamodb_table = "my-lock-table"
+    use_lockfile = true
   }
+}
+EOF
 }

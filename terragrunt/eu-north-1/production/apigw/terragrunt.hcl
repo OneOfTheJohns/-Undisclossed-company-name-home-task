@@ -1,14 +1,27 @@
+include "region" {
+  path = find_in_parent_folders("region.hcl")
+  expose = true
+}
+
+include "account" {
+  path = find_in_parent_folders("account.hcl")
+  expose = true
+}
+
 terraform {
-    source = "../../terraform-modules/apigw"
+  source = "../../../../terraform-modules/apigw"
 }
 
 dependency "lambda" {
-    config_path = "../lambda"
+  config_path = "../lambda"
+  mock_outputs = {
+    lambda_arn = "lambda_arn_mock_output"
+  }
 }
 
 inputs = {
-    apigw_name = "prodgw"
-    throttling_burst_limit = 500
-    throttling_rate_limit = 500
-    integration_uri = dependency.lambda.output.lambda_arn
+  apigw_name = "prodgw"
+  throttling_burst_limit = 500
+  throttling_rate_limit = 500
+  integration_uri = dependency.lambda.outputs.lambda_arn
 }

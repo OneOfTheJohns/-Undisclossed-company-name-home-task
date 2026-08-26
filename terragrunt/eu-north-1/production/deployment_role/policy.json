@@ -1,0 +1,37 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "logs:CreateLogGroup",
+          "apigateway:GET",
+          "apigateway:POST",
+          "apigateway:PATCH",
+          "apigateway:DELETE",
+          "dynamodb:DescribeTable",
+          "dynamodb:UpdateTable",
+          "dynamodb:DeleteTable",
+          "dynamodb:TagResource",
+          "dynamodb:UntagResource",
+          "dynamodb:CreateTable",
+          "lambda:CreateFunction",
+          "lambda:GetFunction",
+          "lambda:UpdateFunctionCode",
+          "lambda:UpdateFunctionConfiguration",
+          "lambda:DeleteFunction",
+          "lambda:PublishVersion",
+          "lambda:TagResource",
+          "lambda:UntagResource",
+          "iam:CreateRole",
+          "iam:GetRole",
+          "iam:UpdateRole",
+          "iam:DeleteRole",
+          "iam:AttachRolePolicy",
+          "iam:DetachRolePolicy",
+          "iam:PassRole"
+        ],
+        "Resource": "*"
+      }
+    ]
+}

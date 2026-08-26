@@ -12,20 +12,21 @@ resource "aws_apigatewayv2_stage" "example" {
     throttling_rate_limit = var.throttling_rate_limit
     throttling_burst_limit = var.throttling_burst_limit 
   }
+  depends_on = [ aws_apigatewayv2_api.example ]
 }
 
 ### https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_route
 resource "aws_apigatewayv2_route" "health-POST" {
   count = length(var.route_keys)
-  api_id    = aws_apigatewayv2_api.api.id
+  api_id    = aws_apigatewayv2_api.example.id
   route_key = var.route_keys[count.index]
-  target    = "integrations/${var.aws_apigatewayv2_integration.creating_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.creating_integration[0].id}"
   depends_on = [ aws_apigatewayv2_integration.creating_integration ]
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration
 resource "aws_apigatewayv2_integration" "creating_integration" {
-  count = var.integration_uri ? 1 : 0
+  count = var.integration_uri != null && var.integration_uri != "" ? 1 : 0
   api_id           = aws_apigatewayv2_api.example.id
   integration_type = var.integration_type
   connection_type           = var.connection_type
