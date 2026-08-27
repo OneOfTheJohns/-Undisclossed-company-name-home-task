@@ -1,0 +1,118 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  plan_prod:
+    name: Terragrunt Plan Prod
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+          role-session-name: github-actions-plan-prod
+          aws-region: eu-north-1
+
+      - name: Install Terragrunt
+        uses: gruntwork-io/terragrunt-action@v2
+        with:
+          tg_version: latest
+
+      - name: Plan
+        working-directory: terragrunt/eu-north-1/production
+        run: terragrunt run --all plan
+
+  plan_staging:
+    name: Terragrunt Plan Staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+          role-session-name: github-actions-plan-staging
+          aws-region: eu-north-1
+
+      - name: Install Terragrunt
+        uses: gruntwork-io/terragrunt-action@v2
+        with:
+          tg_version: latest
+
+      - name: Plan
+        working-directory: terragrunt/eu-north-1/staging
+        run: terragrunt run --all plan
+
+  apply_prod:
+    name: Terragrunt Apply Prod
+    needs: plan_prod
+    runs-on: ubuntu-latest
+
+    environment:
+      name: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+          role-session-name: github-actions-apply-prod
+          aws-region: eu-north-1
+
+      - name: Install Terragrunt
+        uses: gruntwork-io/terragrunt-action@v2
+        with:
+          tg_version: latest
+
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/production
+        run: terragrunt run --all apply --non-interactive
+
+  apply_staging:
+    name: Terragrunt Apply Staging
+    needs: plan_staging
+    runs-on: ubuntu-latest
+
+    environment:
+      name: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+          role-session-name: github-actions-apply-staging
+          aws-region: eu-north-1
+
+      - name: Install Terragrunt
+        uses: gruntwork-io/terragrunt-action@v2
+        with:
+          tg_version: latest
+
+      - name: Install Terragrunt
+        uses: gruntwork-io/terragrunt-action@v2
+        with:
+          tg_version: latest
+
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/staging
+        run: terragrunt run --all apply --non-interactive
