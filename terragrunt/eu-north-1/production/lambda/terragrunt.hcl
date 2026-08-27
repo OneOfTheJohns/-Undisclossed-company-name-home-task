@@ -27,7 +27,7 @@ dependency "dynamodb" {
 }
 
 inputs = {
-  path_to_lambda = "../../../lambdas/apigw_processing/deployment_package.zip"
+  path_to_lambda = "../../../../lambdas/apigw_processing/deployment_package.zip"
   lambda_iam_role_arn = dependency.lambda_role.outputs.role_arn
   env_variables = {
     table_name = dependency.dynamodb.outputs.table_name 
