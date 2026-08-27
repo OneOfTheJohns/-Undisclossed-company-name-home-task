@@ -24,6 +24,7 @@ inputs = {
   assume_role_policy = templatefile("./assume_role_policy.json", {
     account_id = include.account.locals.account_id
     path = "repo:OneOfTheJohns@80323322/-Undisclossed-company-name-home-task@1345081728*"
+    s3bucket_name = "terraform-state-s3-bucket-very-original" # s3 bucket name of where the terraform state is located
   })
 }
 
