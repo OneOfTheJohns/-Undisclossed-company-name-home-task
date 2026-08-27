@@ -30,7 +30,6 @@ resource "aws_apigatewayv2_integration" "creating_integration" {
   api_id           = aws_apigatewayv2_api.example.id
   integration_type = var.integration_type
   connection_type           = var.connection_type
-  content_handling_strategy = var.content_handling_strategy
   description               = var.description
   integration_method        = var.integration_method
   integration_uri           = var.integration_uri

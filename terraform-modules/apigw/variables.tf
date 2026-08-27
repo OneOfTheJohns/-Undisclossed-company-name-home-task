@@ -29,11 +29,6 @@ variable "connection_type" {
   default = "INTERNET"
 }
 
-variable "content_handling_strategy" {
-  type = string
-  default = "CONVERT_TO_TEXT"
-}
-
 variable "description" {
   type = string
   default = "for lambda processing"
