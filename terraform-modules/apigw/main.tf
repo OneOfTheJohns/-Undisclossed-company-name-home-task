@@ -7,7 +7,8 @@ resource "aws_apigatewayv2_api" "example" {
 ### https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_stage.html
 resource "aws_apigatewayv2_stage" "example" {
   api_id = aws_apigatewayv2_api.example.id
-  name   = "stage-${var.apigw_name}"
+  name        = "$default"
+  auto_deploy = true
   default_route_settings {
     throttling_rate_limit = var.throttling_rate_limit
     throttling_burst_limit = var.throttling_burst_limit 
@@ -34,4 +35,13 @@ resource "aws_apigatewayv2_integration" "creating_integration" {
   integration_method        = var.integration_method
   integration_uri           = var.integration_uri
   passthrough_behavior      = var.passthrough_behavior
+}
+
+resource "aws_lambda_permission" "apigw" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = var.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.example.execution_arn}/*/*"
 }

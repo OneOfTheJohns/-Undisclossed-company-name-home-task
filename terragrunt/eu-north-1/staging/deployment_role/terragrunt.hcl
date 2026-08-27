@@ -14,9 +14,9 @@ terraform {
 
 # example inputs
 inputs = {
-  role_name = "deployment-role"
+  role_name = "deployment-role-stg"
   account_id = include.account.locals.account_id
-  env = "prod"
+  env = "stg"
   policy_json = templatefile("./policy.json", {
     s3bucket_name = "terraform-state-s3-bucket-very-original" # s3 bucket name of where the terraform state is located
   })

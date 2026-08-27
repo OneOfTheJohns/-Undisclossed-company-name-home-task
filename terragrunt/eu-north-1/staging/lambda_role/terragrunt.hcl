@@ -13,11 +13,10 @@ terraform {
 }
 
 locals {
-  user_name = "john"
 }
 # example inputs
 inputs = {
-  role_name = "lambda_role_prod"
+  role_name = "lambda_role_stg"
   account_id = include.account.locals.account_id
   policy_json = file("./policy.json")
   assume_role_policy = templatefile("./assume_role_policy.json", {

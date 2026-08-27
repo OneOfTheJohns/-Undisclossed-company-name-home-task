@@ -1,0 +1,49 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  apply_prod:
+    name: Terragrunt Apply Prod
+    runs-on: ubuntu-latest
+
+    environment:
+      name: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+          role-session-name: github-actions-apply-prod
+          aws-region: eu-north-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Install Terragrunt
+        run: |
+          curl -L https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 \
+            -o /usr/local/bin/terragrunt
+          chmod +x /usr/local/bin/terragrunt
+
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/production/lambda_role
+        run: terragrunt run --all apply --non-interactive
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/production/dynamodb
+        run: terragrunt run --all apply --non-interactive      
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/production/lambda
+        run: terragrunt run --all apply --non-interactive
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/production/apigw
+        run: terragrunt run --all apply --non-interactive

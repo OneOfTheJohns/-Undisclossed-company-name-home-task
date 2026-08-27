@@ -7,5 +7,5 @@ variable "lambda_iam_role_arn" {
 }
 
 variable "env_variables" {
-  type = object({})
+  type = map(string)
 }

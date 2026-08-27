@@ -21,7 +21,7 @@ dependency "lambda" {
 }
 
 inputs = {
-  apigw_name = "prodgw"
+  apigw_name = "stggw"
   throttling_burst_limit = 500
   throttling_rate_limit = 500
   integration_uri = dependency.lambda.outputs.lambda_arn

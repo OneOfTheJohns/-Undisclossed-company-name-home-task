@@ -4,6 +4,7 @@ import boto3
 import os
 import calendar;
 import time;
+import json
 
 table_name = os.environ["table_name"]
 
@@ -12,6 +13,7 @@ dynamo = boto3.resource('dynamodb').Table(table_name)
 
 ### writing down the event into dynamodb
 def create(body,id):
+    print("******* CREATE *********")
     try: 
         dynamo.put_item(
             Item={
@@ -37,7 +39,7 @@ def lambda_handler(event, context):
     ###https://www.geeksforgeeks.org/python/get-current-timestamp-using-python/
     ### getting unique id
     gmt = time.gmtime()
-    ts = calendar.timegm(gmt)
+    ts = str(calendar.timegm(gmt))
     print("timestamp:", ts)
     ### https://docs.aws.amazon.com/lambda/latest/dg/python-logging.html
     ### printing out the event to cloudwatch logs.
@@ -47,6 +49,13 @@ def lambda_handler(event, context):
         body=event["body"]
         id=ts
         create(body,id)
+        # https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-output-format
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": "\"status\": \"healthy\", \"message\": \"Request processed and saved.\""
+        }
     except:
         answer=400
-    return answer

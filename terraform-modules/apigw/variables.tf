@@ -48,3 +48,7 @@ variable "route_keys" {
   type = list(string)
   default = [ "POST /health", "GET /health" ]
 }
+
+variable "function_name" {
+  type = string
+}
