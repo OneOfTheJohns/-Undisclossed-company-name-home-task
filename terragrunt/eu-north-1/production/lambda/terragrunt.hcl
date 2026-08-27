@@ -27,7 +27,8 @@ dependency "dynamodb" {
 }
 
 inputs = {
-  path_to_lambda = "../../../../lambdas/apigw_processing/deployment_package.zip"
+  # https://docs.terragrunt.com/reference/hcl/functions/#get_repo_root
+  path_to_lambda = "${get_repo_root()}/lambdas/apigw_processing/deployment_package.zip"
   lambda_iam_role_arn = dependency.lambda_role.outputs.role_arn
   env_variables = {
     table_name = dependency.dynamodb.outputs.table_name 
