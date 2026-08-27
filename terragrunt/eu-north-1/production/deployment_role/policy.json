@@ -30,7 +30,11 @@
           "iam:AttachRolePolicy",
           "iam:DetachRolePolicy",
           "iam:PassRole",
-          "iam:GetPolicy"
+          "iam:GetPolicy",
+          "iam:ListRolePolicies",
+          "iam:ListAttachedRolePolicies",
+          "iam:GetPolicyVersion",
+          "iam:GetOpenIDConnectProvider"
         ],
         "Resource": "*"
       },
