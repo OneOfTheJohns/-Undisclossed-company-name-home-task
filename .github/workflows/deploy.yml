@@ -10,7 +10,6 @@ permissions:
 jobs:
   apply_prod:
     name: Terragrunt Apply Prod
-    needs: plan_prod
     runs-on: ubuntu-latest
 
     environment:
