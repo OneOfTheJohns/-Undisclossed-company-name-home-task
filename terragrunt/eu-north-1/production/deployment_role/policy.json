@@ -41,7 +41,8 @@
           "dynamodb:ListTagsOfResource",
           "iam:ListPolicyVersions",
           "iam:DeletePolicyVersion",
-          "iam:CreatePolicyVersion"
+          "iam:CreatePolicyVersion",
+          "lambda:ListVersionsByFunction"
         ],
         "Resource": "*"
       },
