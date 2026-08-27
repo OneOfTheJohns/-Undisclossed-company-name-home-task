@@ -21,7 +21,7 @@ inputs = {
   account_id = include.account.locals.account_id
   user_name = local.user_name
   policy_json = file("./policy.json")
-  assume_role_policy = templatefile("./policy.json", {
+  assume_role_policy = templatefile("./assume_role_policy.json", {
     account_id = include.account.locals.account_id
     user_name  = local.user_name
   })
