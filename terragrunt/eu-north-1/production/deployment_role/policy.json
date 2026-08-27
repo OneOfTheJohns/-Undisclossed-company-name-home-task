@@ -42,7 +42,8 @@
           "iam:ListPolicyVersions",
           "iam:DeletePolicyVersion",
           "iam:CreatePolicyVersion",
-          "lambda:ListVersionsByFunction"
+          "lambda:ListVersionsByFunction",
+          "lambda:GetFunctionCodeSigningConfi"
         ],
         "Resource": "*"
       },
