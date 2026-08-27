@@ -35,7 +35,8 @@
           "iam:ListAttachedRolePolicies",
           "iam:GetPolicyVersion",
           "iam:GetOpenIDConnectProvider",
-          "iam:CreatePolicy"
+          "iam:CreatePolicy",
+          "dynamodb:DescribeContinuousBackups"
         ],
         "Resource": "*"
       },
