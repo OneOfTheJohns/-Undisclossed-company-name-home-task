@@ -27,15 +27,12 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
           role-session-name: github-actions-plan-prod
           aws-region: eu-north-1
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
+      
       - name: Install Terragrunt
-        uses: gruntwork-io/terragrunt-action@v2
-        with:
-          tg_version: latest
-          tf_version: latest
+        run: |
+          curl -L https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 \
+            -o /usr/local/bin/terragrunt
+          chmod +x /usr/local/bin/terragrunt
 
       - name: Plan
         working-directory: terragrunt/eu-north-1/production
@@ -57,9 +54,10 @@ jobs:
           aws-region: eu-north-1
 
       - name: Install Terragrunt
-        uses: gruntwork-io/terragrunt-action@v2
-        with:
-          tg_version: latest
+        run: |
+          curl -L https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 \
+            -o /usr/local/bin/terragrunt
+          chmod +x /usr/local/bin/terragrunt
 
       - name: Plan
         working-directory: terragrunt/eu-north-1/staging
@@ -85,9 +83,10 @@ jobs:
           aws-region: eu-north-1
 
       - name: Install Terragrunt
-        uses: gruntwork-io/terragrunt-action@v2
-        with:
-          tg_version: latest
+        run: |
+          curl -L https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 \
+            -o /usr/local/bin/terragrunt
+          chmod +x /usr/local/bin/terragrunt
 
       - name: Apply
         working-directory: terragrunt/eu-north-1/production
@@ -113,14 +112,10 @@ jobs:
           aws-region: eu-north-1
 
       - name: Install Terragrunt
-        uses: gruntwork-io/terragrunt-action@v2
-        with:
-          tg_version: latest
-
-      - name: Install Terragrunt
-        uses: gruntwork-io/terragrunt-action@v2
-        with:
-          tg_version: latest
+        run: |
+          curl -L https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64 \
+            -o /usr/local/bin/terragrunt
+          chmod +x /usr/local/bin/terragrunt
 
       - name: Apply
         working-directory: terragrunt/eu-north-1/staging
