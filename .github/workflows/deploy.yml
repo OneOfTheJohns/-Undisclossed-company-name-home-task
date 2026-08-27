@@ -37,7 +37,7 @@ jobs:
 
       - name: Apply
         working-directory: terragrunt/eu-north-1/production
-        run: terragrunt run --all apply --non-interactive --exclude-dir deployment_role
+        run: terragrunt run --all --exclude-dir deployment_role apply --non-interactive
 
   apply_staging:
     name: Terragrunt Apply Staging
@@ -68,4 +68,4 @@ jobs:
 
       - name: Apply
         working-directory: terragrunt/eu-north-1/staging
-        run: terragrunt run --all apply --non-interactive --exclude-dir deployment_role
+        run: terragrunt run --all --exclude-dir deployment_role apply --non-interactive
