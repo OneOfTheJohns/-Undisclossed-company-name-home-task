@@ -36,8 +36,17 @@ jobs:
           chmod +x /usr/local/bin/terragrunt
 
       - name: Apply
-        working-directory: terragrunt/eu-north-1/production
-        run: terragrunt run --all --exclude deployment_role apply --non-interactive
+        working-directory: terragrunt/eu-north-1/production/apigw
+        run: terragrunt run --all apply --non-interactive
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/production/dynamodb
+        run: terragrunt run --all apply --non-interactive
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/production/lambda_role
+        run: terragrunt run --all apply --non-interactive
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/production/lambda
+        run: terragrunt run --all apply --non-interactive
 
   apply_staging:
     name: Terragrunt Apply Staging
@@ -67,5 +76,14 @@ jobs:
           chmod +x /usr/local/bin/terragrunt
 
       - name: Apply
-        working-directory: terragrunt/eu-north-1/staging
-        run: terragrunt run --all --exclude deployment_role apply --non-interactive
+        working-directory: terragrunt/eu-north-1/staging/apigw
+        run: terragrunt run --all apply --non-interactive
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/staging/dynamodb
+        run: terragrunt run --all apply --non-interactive
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/staging/lambda_role
+        run: terragrunt run --all apply --non-interactive
+      - name: Apply
+        working-directory: terragrunt/eu-north-1/staging/lambda
+        run: terragrunt run --all apply --non-interactive
