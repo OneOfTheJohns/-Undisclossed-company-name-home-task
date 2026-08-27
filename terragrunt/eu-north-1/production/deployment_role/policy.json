@@ -36,7 +36,12 @@
           "iam:GetPolicyVersion",
           "iam:GetOpenIDConnectProvider",
           "iam:CreatePolicy",
-          "dynamodb:DescribeContinuousBackups"
+          "dynamodb:DescribeContinuousBackups",
+          "dynamodb:DescribeTimeToLive",
+          "dynamodb:ListTagsOfResource",
+          "iam:ListPolicyVersions",
+          "iam:DeletePolicyVersion",
+          "iam:CreatePolicyVersion"
         ],
         "Resource": "*"
       },
