@@ -41,7 +41,6 @@ jobs:
 
   apply_staging:
     name: Terragrunt Apply Staging
-    needs: plan_staging
     runs-on: ubuntu-latest
 
     environment:
