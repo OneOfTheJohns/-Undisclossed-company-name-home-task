@@ -1,4 +1,4 @@
-name: Deploy
+name: plan
 
 on:
   workflow_dispatch:
@@ -8,15 +8,16 @@ permissions:
   contents: read
 
 jobs:
-  apply_prod:
-    name: Terragrunt Apply Prod
-    needs: plan_prod
+  plan_prod:
+    name: Terragrunt Plan Prod
     runs-on: ubuntu-latest
 
-    environment:
-      name: production
-
     steps:
+      - name: Show GitHub OIDC environment
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Ref: $GITHUB_REF"
+          echo "Workflow: $GITHUB_WORKFLOW"
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -24,7 +25,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
-          role-session-name: github-actions-apply-prod
+          role-session-name: github-actions-plan-prod
           aws-region: eu-north-1
 
       - name: Setup Terraform
@@ -36,17 +37,13 @@ jobs:
             -o /usr/local/bin/terragrunt
           chmod +x /usr/local/bin/terragrunt
 
-      - name: Apply
+      - name: Plan
         working-directory: terragrunt/eu-north-1/production
-        run: terragrunt run --all apply --non-interactive
+        run: terragrunt run --all plan
 
-  apply_staging:
-    name: Terragrunt Apply Staging
-    needs: plan_staging
+  plan_staging:
+    name: Terragrunt Plan Staging
     runs-on: ubuntu-latest
-
-    environment:
-      name: staging
 
     steps:
       - name: Checkout
@@ -56,9 +53,9 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
-          role-session-name: github-actions-apply-staging
+          role-session-name: github-actions-plan-staging
           aws-region: eu-north-1
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -68,6 +65,6 @@ jobs:
             -o /usr/local/bin/terragrunt
           chmod +x /usr/local/bin/terragrunt
 
-      - name: Apply
+      - name: Plan
         working-directory: terragrunt/eu-north-1/staging
-        run: terragrunt run --all apply --non-interactive
+        run: terragrunt run --all plan
