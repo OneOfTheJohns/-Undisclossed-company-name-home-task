@@ -18,13 +18,14 @@ inputs = {
   account_id = include.account.locals.account_id
   env = "prod"
   user_name = "john"
-  policy_json = file("./policy.json")
+  policy_json = templatefile("./policy.json", {
+    s3bucket_name = "terraform-state-s3-bucket-very-original" # s3 bucket name of where the terraform state is located
+  })
   ### https://medium.com/@kroeze.wb/secure-github-deployments-to-aws-with-oidc-aa4203a523cc
   ### Adding a assume_role_policy for OIDC wiht github actions.
   assume_role_policy = templatefile("./assume_role_policy.json", {
     account_id = include.account.locals.account_id
-    path = "repo:OneOfTheJohns@80323322/-Undisclossed-company-name-home-task@1345081728*"
-    s3bucket_name = "terraform-state-s3-bucket-very-original" # s3 bucket name of where the terraform state is located
+    path = "repo:OneOfTheJohns@80323322/-Undisclossed-company-name-home-task@1345081728*" # your repo OIDC path for assume role permissions
   })
 }
 

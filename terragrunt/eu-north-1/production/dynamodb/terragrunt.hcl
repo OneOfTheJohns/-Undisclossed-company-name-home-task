@@ -14,5 +14,5 @@ terraform {
 
 # example inputs
 inputs = {
-    
+  table_name = "prod-table"
 }
