@@ -8,29 +8,17 @@ table_name = os.environ["table_name"]
 # Create the DynamoDB resource
 dynamo = boto3.resource('dynamodb').Table(table_name)
 
-# Define some functions to perform the CRUD operations
-def create(payload):
-    return dynamo.put_item(Item=payload['Item'])
-
-def read(payload):
-    return dynamo.get_item(Key=payload['Key'])
-
-def update(payload):
-    return dynamo.update_item(**{k: payload[k] for k in ['Key', 'UpdateExpression', 
-    'ExpressionAttributeNames', 'ExpressionAttributeValues'] if k in payload})
-
-def delete(payload):
-    return dynamo.delete_item(Key=payload['Key'])
-
-def echo(payload):
-    return payload
+### writing down the event into dynamodb
+def create(key,name):
+    try: 
+        dynamo.put_item(key=name)
+        answer = {"status": "healthy", "message": "Request processed and saved."}
+        return answer
+    except Exception as e:
+        print(f"something broke {e}")
 
 operations = {
     'create': create,
-    'read': read,
-    'update': update,
-    'delete': delete,
-    'echo': echo,
 }
 
 def lambda_handler(event, context):
@@ -39,12 +27,14 @@ def lambda_handler(event, context):
       - payload: a JSON object containing parameters to pass to the 
         operation being performed
     '''
-    
-    operation = event['operation']
-    payload = event['payload']
-    
-    if operation in operations:
-        return operations[operation](payload)
-        
-    else:
-        raise ValueError(f'Unrecognized operation "{operation}"')
+    ### https://docs.aws.amazon.com/lambda/latest/dg/python-logging.html
+    ### printing out the event to cloudwatch logs.
+    print(event)
+    ### checking if event contains proper key-name payload
+    try:
+        key=event["key"]
+        name=event["name"]
+        create(key,name)
+    except:
+        answer=400
+    return answer

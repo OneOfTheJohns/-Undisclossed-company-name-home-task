@@ -14,11 +14,14 @@ terraform {
 
 # example inputs
 inputs = {
-  role_name = "lambda_role"
+  role_name = "lambda_role_prod"
   account_id = include.account.locals.account_id
-  env = "prod"
   user_name = "john"
   policy_json = file("./policy.json")
+  assume_role_policy = templatefile("${path.module}/policy.json.tpl", {
+    account_id = var.account_id
+    user_name  = var.user_name
+  })
 }
 
 # https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/permissions-reference-cwl.html

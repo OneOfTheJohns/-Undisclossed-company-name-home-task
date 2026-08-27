@@ -13,3 +13,7 @@ variable "user_name" {
 variable "policy_json" {
   type = string
 }
+
+variable "assume_role_policy" {
+  type = string
+}
