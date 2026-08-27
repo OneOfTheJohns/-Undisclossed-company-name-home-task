@@ -31,11 +31,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Setup Terragrunt
+      - name: Install Terragrunt
         uses: gruntwork-io/terragrunt-action@v2
         with:
           tg_version: latest
-          tf_path: terraform
+          tf_version: latest
 
       - name: Plan
         working-directory: terragrunt/eu-north-1/production
