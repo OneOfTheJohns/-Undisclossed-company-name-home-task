@@ -9,7 +9,7 @@ include "account" {
 }
 
 terraform {
-    source = "../../terraform-modules/dynamodb"
+    source = "../../../../terraform-modules/dynamodb"
 }
 
 # example inputs
