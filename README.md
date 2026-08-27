@@ -7,6 +7,7 @@
 3) Third shift, Start of work -> Aug 27 18:40
 
 # Prerequisities
-1) Deploy the "deployment_role", for the github actions to use.
-2) Set the AWS_ASSUME_ROLE_ARN secret in your github repo.
-3) 
+1) terragrunt apply ./terragrunt/eu-north-1/production/deployment-role
+2) terragrunt apply ./terragrunt/eu-north-1/production/github_IdP
+3) Set the AWS_ASSUME_ROLE_ARN secret in your github repo.
+4) 
