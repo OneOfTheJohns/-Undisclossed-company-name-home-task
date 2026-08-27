@@ -7,4 +7,6 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
     name = "id"
     type = "S"
   }
+  read_capacity = 10
+  write_capacity = 10
 }

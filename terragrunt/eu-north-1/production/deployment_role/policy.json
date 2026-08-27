@@ -34,7 +34,8 @@
           "iam:ListRolePolicies",
           "iam:ListAttachedRolePolicies",
           "iam:GetPolicyVersion",
-          "iam:GetOpenIDConnectProvider"
+          "iam:GetOpenIDConnectProvider",
+          "iam:CreatePolicy"
         ],
         "Resource": "*"
       },
