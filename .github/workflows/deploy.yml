@@ -32,6 +32,7 @@ jobs:
         uses: gruntwork-io/terragrunt-action@v2
         with:
           tg_version: latest
+          tf_version: latest
 
       - name: Plan
         working-directory: terragrunt/eu-north-1/production

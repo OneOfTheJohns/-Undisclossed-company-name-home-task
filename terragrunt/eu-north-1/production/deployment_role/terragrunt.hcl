@@ -23,7 +23,7 @@ inputs = {
   ### Adding a assume_role_policy for OIDC wiht github actions.
   assume_role_policy = templatefile("./assume_role_policy.json", {
     account_id = include.account.locals.account_id
-    path = "repo:OneOfTheJohns@80323322/-Undisclossed-company-name-home-task@1345081728"
+    path = "repo:OneOfTheJohns@80323322/-Undisclossed-company-name-home-task@1345081728*"
   })
 }
 
